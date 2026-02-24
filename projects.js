@@ -73,7 +73,5 @@ export const projectsData = [
     name: "Capsule X Design",
     director: "Sophia // Chen",
     location: "Neon House - Brooklyn",
-},{
-    
 }
 ];

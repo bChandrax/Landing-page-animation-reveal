@@ -1,4 +1,10 @@
-node_modulues/
+# Node modules - ALWAYS ignore these
+node_modules/
+node_modules/**/*
+
+
 dist/
 .env
 .DS_Store
+node_modules/
+node_modules/**/*

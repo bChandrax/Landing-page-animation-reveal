@@ -1,3 +1,8 @@
+@font-face {
+    font-family: 'GeistPixel';
+    src: url('/fonts/GeistPixel-Square.ttf') format('truetype');
+}
+
 *{
     margin: 0;
     padding: 0;
@@ -7,6 +12,7 @@
 body{
     font-family: Arial, Helvetica, sans-serif;
     background-color: #e3e3db;
+    overflow: hidden;
 }
 
 img{
@@ -129,10 +135,18 @@ a{
 
 nav{
     position: fixed;
-    width: 100vw;
-    padding: 1em;
+    top: 1.25em;
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+    min-width: 560px;
+    padding: 0.75em 2em;
     display: flex;
     gap: 2em;
+    align-items: center;
+    background-color: #111;
+    border-radius: 999px;
+    z-index: 100;
 }
 
 nav > * {
@@ -143,6 +157,11 @@ nav > * {
     display: flex;
     justify-content: space-around;
     align-items: center;
+    gap: 1.5em;
+}
+
+.links a {
+    color: #e3e3db;
 }
 
 .nav-logo {
@@ -151,32 +170,73 @@ nav > * {
     justify-content: center;
 }
 
-.nav-logo a {
-    font-family:Arial, Helvetica, sans-serif;
-    font-size: 1.75em;
-    font-weight: bolder;
-    font-style: italic;
-    line-height: 0.9;
+.nav-logo img {
+    height:2rem;
+    aspect-ratio: 1;
+    object-fit:contain;
 }
 
-.banner-img {
-    position: absolute;
-    top: 45%;
-    left:50%;
-    transform: translate(-50%, -50%) scale(0);
-    width: 20%;
-    aspect-ratio:4/5;
+.reveal-panel {
+    font-family: 'GeistPixel', monospace;
+    position: fixed;
+    top: 50%;
+    /* Left edge sits exactly where the hero's right edge lands after shifting -18vw.
+       Hero centre ends at 50%-18vw=32vw, hero half-visible-width ≈9vw → right edge ≈41vw */
+    left: 41vw;
+    transform: translateY(-50%);
+    width: 30vw;
+    aspect-ratio: 4/5;
+    display: flex;
+    align-items: stretch;
+    overflow: hidden;
+    z-index: 1;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.reveal-panel-text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2em 1.5em;
+    background: #e3e3db;
+    transform: translateX(100%);
+}
+
+.reveal-panel-text h2 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-style: italic;
+    font-size: 2rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    line-height: 0.9;
+    margin-bottom: 0.75em;
+    color: #000;
+}
+
+.reveal-panel-text p {
+    font-size: 0.65rem;
+    color: #555;
+    letter-spacing: 0.08em;
 }
 
 .intro-copy {
     position: absolute;
     top: 45%;
-    transform: translateY(-50%);
-    width: 100%;
+    transform: translateY(-50);
     padding:0 8em;
-    display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items:center;
+    margin-left: 65%;
+    display: flex;
+    flex-direction: column;
+}
+
+.intro-copy h3{
+    margin-top: .4em;
+    font-size: 0.75rem;
+    width: 30vw;
 }
 
 .title {
@@ -216,6 +276,10 @@ nav > * {
     position: relative;
     will-change: transform;
     margin-right: 0.1rem;
+}
+
+.reveal-panel-text h2{
+    font-size: 2rem;
 }
 
 @media (max-width: 900px){

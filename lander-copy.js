@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () =>{
     const projectsContainer = document.querySelector(".projects");
     const locationContainer = document.querySelector(".locations");
     const gridImages = gsap.utils.toArray(".img");
-    const heroImage = document.querySelector(".img-hero-img");
+    const heroImage = document.querySelector(".hero-img");
 
     const images = gridImages.filter((img) => img != heroImage);
 
@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", () =>{
                         const imgElement = img.querySelector("img");
 
                         if (cycle == totalCycles -1 && img == heroImage){
-                            imgElement.src="images/img5.jpg";
+                            imgElement.src="images/img2.jpg";
                             gsap.set(".hero-img img", {scale: 2});
                         } else{
                             imgElement.src = randomImages[index];
@@ -94,7 +94,7 @@ document.addEventListener("DOMContentLoaded", () =>{
         });
 
         gsap.set(introCopy.words, {
-            y: "110%",
+            y: "100%",
         });
 
         gsap.set(titleHeading.words, {
@@ -208,62 +208,32 @@ document.addEventListener("DOMContentLoaded", () =>{
             ease: "hop",
         });
 
-        imagesTimeline.to(".hero-img",{
-            y: -20,
-            duration: 1,
-            ease: "hop",
-        });
-
-        imagesTimeline.to(".hero-img",{
+        // After non-hero images collapse, hero grows smoothly from its grid position
+        // — never collapses, so it appears to stay in place then expand
+        imagesTimeline.to(".hero-img", {
             scale: 4,
             clipPath: "polygon(20% 10%, 80% 10%, 80% 90%, 20% 90%)",
             duration: 1.5,
             ease: "hop",
             onStart: () => {
-                gsap.to(".hero-img img",{
+                gsap.to(".hero-img img", {
                     scale: 1,
                     duration: 1.5,
                     ease: "hop",
                 });
 
-                gsap.to(".banner-img", {scale: 1, delay: 0.5, duration: 0.5});
-                gsap.to("nav", {y: "0%", duration: 1, ease: "hop", delay: 0.25});
+                gsap.to("nav", { y: "0%", duration: 1, ease: "hop", delay: 0.25 });
 
-                imagesTimeline.to(
-                    ".banner-img-1",
-                    {
-                        y: 0,
-                        left: "40%",
-                        rotate: -20,
-                        duration: 1.5,
-                        delay: 0.5,
-                        ease: "hop",
-                    },
-                    "<"
-                );
-
-                imagesTimeline.to(
-                    ".banner-img-2",
-                    {
-                        y: 0,
-                        left: "60%",
-                        rotate: 20,
-                        duration: 1.5,
-                        ease: "hop",
-                    },
-                    "<"
-                );
-
-                textTimeline.to(titleHeading.words,{
+                textTimeline.to(titleHeading.words, {
                     y: "0%",
                     duration: 1,
                     stagger: 0.1,
                     delay: 1.5,
-                    ease: "power3.out",    
+                    ease: "power3.out",
                 });
 
                 textTimeline.to(
-                    introCopy.words,{
+                    introCopy.words, {
                         y: "0%",
                         duration: 1,
                         stagger: 0.1,
@@ -272,6 +242,30 @@ document.addEventListener("DOMContentLoaded", () =>{
                     },
                     "<"
                 );
+            }
+        });
+
+        // Hero shifts left by exactly half the panel width so the gap between
+        // hero right-edge and panel left-edge is centred on the page.
+        // Hero visible width at scale 4 ≈ 60% of its container (clip is 20-80% = 60%)
+        // Container is 30vw  →  visible hero ≈ 18vw
+        // Reveal panel is 36vw wide
+        // Total composed width ≈ 18vw + 36vw = 54vw
+        // To centre: left edge of hero at 50% - 27vw = 23vw
+        // Hero centre currently at 50%, so shift = -(27vw - 9vw) = -18vw
+        imagesTimeline.to(".hero-img", {
+            x: "-15vw",
+            duration: 1.5,
+            ease: "hop",
+            delay: 0.5,
+            onStart: () => {
+                gsap.set(".reveal-panel", { opacity: 1 });
+
+                gsap.to(".reveal-panel-text", {
+                    x: "35%",
+                    duration: 1.5,
+                    ease: "hop",
+                });
             }
         });
     }
